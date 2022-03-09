@@ -13,7 +13,8 @@ rm -rf octomap
 git clone --depth 1 --branch v1.9.7 https://github.com/OctoMap/octomap.git
 
 rm -rf fcl
-git clone --depth 1 --branch v0.7.0 https://github.com/flexible-collision-library/fcl.git
+git clone --depth 1 --branch 0.7.0 https://github.com/flexible-collision-library/fcl.git
+
 
 echo "Install eigen"
 cmake -B build -S eigen-3.3.9
