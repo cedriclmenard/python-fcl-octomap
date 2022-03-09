@@ -1,6 +1,8 @@
+set -xe
+
 mkdir -p deps
 cd deps
-get eigen
+# get eigen
 curl -OL https://gitlab.com/libeigen/eigen/-/archive/3.3.9/eigen-3.3.9.tar.gz
 tar -zxf eigen-3.3.9.tar.gz
 
