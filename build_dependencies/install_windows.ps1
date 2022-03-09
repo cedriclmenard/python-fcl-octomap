@@ -80,7 +80,7 @@ Set-Location ..
 # ------------------------------------------------------------------------------
 # FCL
 Write-Host "Building FCL"
-git clone --depth 1 --branch v0.6.1 https://github.com/flexible-collision-library/fcl
+git clone --depth 1 --branch v0.7.0 https://github.com/flexible-collision-library/fcl
 Set-Location fcl
 
 cmake -B build `
