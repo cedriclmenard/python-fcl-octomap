@@ -1,5 +1,6 @@
 import os
 import sys
+import numpy
 
 from setuptools import Extension, setup
 from Cython.Build import cythonize
@@ -72,7 +73,19 @@ setup(
                 libraries=get_libraries(),
                 language="c++",
                 extra_compile_args=["-std=c++11"],
-            )
+            ),
+            # Extension(
+            #     "octomap",
+            #     ["src/fcl/octomap.pyx"],
+            #     include_dirs=get_include_dirs(),
+            #     library_dirs=get_libraries_dir(),
+            #     libraries=[
+            #         "dynamicedt3d",
+            #         "octomap",
+            #         "octomath",
+            #     ],
+            #     language="c++",
+            # )
         ],
     )
 )

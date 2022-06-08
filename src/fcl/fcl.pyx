@@ -12,7 +12,7 @@ import numpy
 ctypedef np.float64_t DOUBLE_t
 
 cimport fcl_defs as defs
-cimport octomap_defs as octomap 
+cimport octomap_defs as octomap
 cimport std_defs as std 
 from collision_data import Contact, CostSource, CollisionRequest, ContinuousCollisionRequest, CollisionResult, ContinuousCollisionResult, DistanceRequest, DistanceResult
 
@@ -435,13 +435,44 @@ cdef class BVHModel(CollisionGeometry):
 cdef class OcTree(CollisionGeometry):
     cdef octomap.OcTree* tree
 
-    def __cinit__(self, r, data):
-        cdef std.stringstream ss
-        cdef vector[char] vd = data
-        ss.write(vd.data(), len(data))
+    def __cinit__(self, r: double, data=None, points3d=None, origin=None, maxrange=-1., lazy_eval=False, discretize=False):
+        self.tree = new octomap.OcTree(r)
 
-        self.tree = new octomap.OcTree(r) 
-        self.tree.readBinaryData(ss)
+        # cdef std.stringstream ss
+        # cdef vector[char] vd = data
+
+        cdef octomap.Pointcloud pc = octomap.Pointcloud()
+
+        # if data is not None:
+        #     ss.write(vd.data(), len(data))
+        #     self.tree.readBinaryData(ss)
+        if points3d is not None:
+            for p in points3d:
+                pc.push_back(<float>p[0],
+                             <float>p[1],
+                             <float>p[2])
+            if origin is not None:
+                self.tree.insertPointCloud(
+                    pc,
+                    octomap.Vector3(<float>origin[0],
+                                 <float>origin[1],
+                                 <float>origin[2]),
+                    <double?>maxrange,
+                    <bool>lazy_eval,
+                    <bool>discretize
+                )
+            else:
+                self.tree.insertPointCloud(
+                    pc,
+                    octomap.Vector3(<float>0.,
+                                 <float>0.,
+                                 <float>0.),
+                    <double?>maxrange,
+                    <bool>lazy_eval,
+                    <bool>discretize
+                )
+
+        
         self.thisptr = new defs.OcTreed(defs.shared_ptr[octomap.OcTree](self.tree))
 
 
