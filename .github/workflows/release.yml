@@ -15,7 +15,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build wheels
-      uses: pypa/cibuildwheel@v2.0.0
+      uses: pypa/cibuildwheel@v2.3.1
     - uses: actions/upload-artifact@v2
       with:
         path: ./wheelhouse/*.whl
@@ -27,7 +27,7 @@ jobs:
         overwrite: true
         draft: false
         update_latest_release: true
-        tag_name: 0.6.1
+        tag_name: 0.7.0
   upload_pypi:
     needs: [build_wheels]
     runs-on: ubuntu-latest
